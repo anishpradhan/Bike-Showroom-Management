@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %} | Our Spare Parts Inventory {% endblock %}
+{% block content %}
+
+{% load humanize %}
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Our Spare Parts Inventory</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">Spare Parts</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+
+
+<!-- Featured spare parts start -->
+<div class="featured-car content-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+
+                <div class="row">
+                    {% for part in parts %}
+                    <div class="col-lg-6 col-md-6">
+                        <div class="car-box-3">
+                            <div class="car-thumbnail">
+                                <a href="{% url 'parts_detail' part.id %}" class="car-img">
+                                <div class="car-thumbnail-before"></div>
+                                <div class="d-flex row justify-content-center">
+
+                                        <div class="price-box">
+                                            <span>Rs. {{part.price | intcomma }}</span>
+                                        </div>
+                                        <img src="{{part.parts_photo.url}}" alt="bike"
+                                            style="width: 262px; height: 262px;">
+                                        </div>
+                                    </a>
+                            </div>
+
+                            </div>
+                            <div class="detail">
+                                <h1 class="title">
+                                    <a href="{% url 'parts_detail' part.id %}">{{part.title}}</a>
+                                </h1>
+                                <ul class="facilities-list clearfix">
+                                    <li>{{part.brand}}</li>
+                                    <li>{{part.position}}</li>
+                                    <li>{{part.weight}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+
+                </div>
+                <!-- Page navigation start -->
+                <div class="pagination-box p-box-2 text-center">
+                    <nav aria-label="Page navigation example">
+                        {% if parts.has_other_pages %}
+                        <ul class="pagination">
+                            {% if parts.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{parts.previous_page_number}}"><i
+                                        class="fa fa-angle-left"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link"><i class="fa fa-angle-left"></i></a>
+                            </li>
+                            {% endif %}
+
+                            {% for i in parts.paginator.page_range %}
+                            {% if parts.number == i %}
+                            <li class="page-item"><a class="page-link active" href="#">{{i}}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if parts.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{parts.next_page_number}}"><i
+                                        class="fa fa-angle-right"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link"><i class="fa fa-angle-right"></i></a>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="sidebar-right">
+                    <!-- Advanced search start -->
+                    <div class="widget advanced-search2">
+                        <h3 class="sidebar-title">Search Parts</h3>
+                        <form action="{% url 'parts_search' %}" method="">
+                            <div class="form-group">
+                                <input type="text" name="keyword" placeholder="Search by name" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <select class="form-control search-fields" name="model">
+                                    <option selected="true" disabled="disabled">Brand</option>
+                                    {% for brand in brand_search %}
+                                    <option value="{{brand}}">{{brand}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control search-fields" name="city">
+                                    <option selected="true" disabled="disabled">Position</option>
+                                    {% for position in position_search %}
+                                    <option value="{{city}}">{{position}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <button class="btn btn-block button-theme btn-md">
+                                    <i class="fa fa-search"></i> Search
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Question start -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured bike end -->
+
+{% endblock %}

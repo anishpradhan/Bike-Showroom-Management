@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %} | Our Cars Inventory {% endblock %}
+{% block content %}
+
+{% load humanize %}
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Our Bike Inventory</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">Bike</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+
+
+<!-- Featured bike start -->
+<div class="featured-car content-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+
+                <div class="row">
+                    {% for bike in bikes %}
+                    <div class="col-lg-6 col-md-6">
+
+                        <div class="car-box-3">
+                            <div class="car-thumbnail">
+
+                                <a href="{% url 'bike_detail' bike.id %}" class="car-img">
+                                    <div class="car-thumbnail-before"></div>
+                                    <div class="d-flex row justify-content-center">
+                                        <div class="tag">For Sale</div>
+                                        <div class="price-box">
+                                            <span>Rs. {{bike.price | intcomma }}</span>
+                                        </div>
+                                        <img src="{{bike.bike_photo.url}}" alt="bike"
+                                            style="width: 100%; height: 262px; ">
+                                    </div>
+                                </a>
+                            </div>
+
+                        
+                        <div class="detail">
+                            <h1 class="title">
+                                <a href="{% url 'bike_detail' bike.id %}">{{bike.bike_title}}</a>
+                            </h1>
+                            <div class="location">
+                                <a href="{% url 'bike_detail' bike.id %}">
+                                    <i class="flaticon-pin"></i>{{bike.state}}, {{bike.city}}
+                                </a>
+                            </div>
+                            <ul class="facilities-list clearfix">
+                                <li>{{bike.fuel_type}}</li>
+                                <li>{{bike.miles | intcomma }} miles</li>
+                                <li>{{bike.transmission}}</li>
+                                <li>{{bike.body_style}}</li>
+                                <li>{{bike.color}}</li>
+                                <li>{{bike.year}}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+            <!-- Page navigation start -->
+            <div class="pagination-box p-box-2 text-center">
+                <nav aria-label="Page navigation example">
+                    {% if bikes.has_other_pages %}
+                    <ul class="pagination">
+                        {% if bikes.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{bikes.previous_page_number}}"><i
+                                    class="fa fa-angle-left"></i></a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link"><i class="fa fa-angle-left"></i></a>
+                        </li>
+                        {% endif %}
+
+                        {% for i in bikes.paginator.page_range %}
+                        {% if bikes.number == i %}
+                        <li class="page-item"><a class="page-link active" href="#">{{i}}</a></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if bikes.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{bikes.next_page_number}}"><i
+                                    class="fa fa-angle-right"></i></a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link"><i class="fa fa-angle-right"></i></a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div class="sidebar-right">
+                <!-- Advanced search start -->
+                <div class="widget advanced-search2">
+                    <h3 class="sidebar-title">Search Bikes</h3>
+                    <form action="{% url 'rent-search' %}" method="">
+                        <div class="form-group">
+                            <input type="text" name="keyword" placeholder="Search by name" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control search-fields" name="model">
+                                <option selected="true" disabled="disabled">Model</option>
+                                {% for model in model_search %}
+                                <option value="{{model}}">{{model}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control search-fields" name="city">
+                                <option selected="true" disabled="disabled">Location</option>
+                                {% for city in city_search %}
+                                <option value="{{city}}">{{city}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control search-fields" name="year">
+                                <option selected="true" disabled="disabled">Year</option>
+                                {% for year in year_search %}
+                                <option value="{{year}}">{{year}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control search-fields" name="body_style">
+                                <option selected="true" disabled="disabled">Select Type Of Bike</option>
+                                {% for body_style in body_style_search %}
+                                <option value="{{body_style}}">{{body_style}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-block button-theme btn-md">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Featured bike end -->
+
+{% endblock %}

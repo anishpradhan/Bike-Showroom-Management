@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+
+{% block title %} | Search Result {% endblock %}
+{% block content %}
+{% load humanize %}
+<!-- Banner start -->
+<!-- Log on to codeastro.com for more projects -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Search Results</h1>
+            <ul class="breadcrumbs">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Search</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Banner end -->
+<!-- Search box 3 start -->
+<div class="search-box-3 sb-7 bg-active">
+    <div class="container">
+        <div class="search-area-inner">
+            <div class="search-contents">
+                <form method="GET" action="{% url 'parts_search' %}">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="model">
+                                    <option selected='selected' disabled='disabled'>{% if search_fields.brand %}
+                                        {{search_fields.brand}} {% else %}Select Brand{%endif%}</option>
+                                    {% for brand in brand_search %}
+                                    <option value="{{brand}}">{{brand}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="city">
+                                    <option selected='selected' disabled='disabled'>{% if search_fields.position %}
+                                        {{search_fields.position}} {% else %}Select Position{%endif%}</option>
+                                    {% for position in position_search %}
+                                    <option value="{{position}}">{{position}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <button class="btn btn-block button-theme btn-md">
+                                    <i class="fa fa-search"></i>Filter Parts
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Search box 3 end -->
+
+<!-- Featured car start -->
+<div class="featured-car content-area">
+    <div class="container">
+        <!-- Main title -->
+        <div class="main-title">
+            <h1>Your Search <span>Result</span></h1>
+        </div>
+        <div class="row">
+            {% for part in parts %}
+            <div class="col-lg-4 col-md-6">
+                <div class="car-box">
+                    <div class="car-thumbnail d-flex justify-content-center">
+                        <div style="z-index: 20;">
+                        <a href="{% url 'parts_detail' part.id %}" class="car-img">
+
+                            <img class="d-block" src="{{part.parts_photo.url}}" alt="parts"
+                                style="height: 262px; width: 262px;">
+                            <div class="facilities-list clearfix">
+                                <ul>
+                                    <li>
+                                        <span><i class="flaticon-way"></i></span>{{part.brand | intcomma}}
+                                    </li>
+                                    <li>
+                                        <span><i class="flaticon-calendar-1"></i></span>{{part.position}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                    </div>
+                    </div>
+                    <div class="detail">
+                        <h1 class="title">
+                            <a href="{% url 'parts_detail' part.id %}">{{part.title}}</a>
+                        </h1>
+
+                    </div>
+                    <div class="footer clearfix">
+                        <div class="pull-left ratings days">
+                            <p class="cartype">{{part.position}}</p>
+                        </div>
+                        <div class="pull-right">
+                            <p class="price">Rs. {{part.price | intcomma}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Featured bike end -->
+
+{% endblock %}

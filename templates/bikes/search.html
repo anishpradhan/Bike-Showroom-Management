@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+
+{% block title %} | Search Result {% endblock %}
+{% block content %}
+{% load humanize %}
+<!-- Banner start -->
+<!-- Log on to codeastro.com for more projects -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Search Results</h1>
+            <ul class="breadcrumbs">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Search</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Banner end -->
+<!-- Search box 3 start -->
+<div class="search-box-3 sb-7 bg-active">
+    <div class="container">
+        <div class="search-area-inner">
+            <div class="search-contents">
+                <form method="GET" action="{% url 'rent-search' %}">
+                    <div class="row">
+                        {%if rent_search %}
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="form-group">
+                           <input type="text" required name="pickup" id="datepicker" placeholder="Pickup Date" class="form-control" style="cursor:pointer">
+                        </div>
+                        </div>
+                        {%endif%}
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="model">
+                                    <option selected='selected' disabled='disabled'>{% if search_fields.model %} {{search_fields.model}} {% else %}Select Model{%endif%}</option>
+                                    {% for model in model_search %}
+                                      <option value="{{model}}">{{model}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="city" >
+                                    <option selected='selected' disabled='disabled'>{% if search_fields.city %} {{search_fields.city}} {% else %}Select Location{%endif%}</option>
+                                    {% for city in city_search %}
+                                      <option value="{{city}}">{{city}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="year">
+                                    <option selected='selected' disabled='disabled'>{% if search_fields.year %} {{search_fields.year}} {% else %}Select Year{%endif%}</option>
+                                    {% for year in year_search %}
+                                      <option value="{{year}}">{{year}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="body_style">
+                                    <option selected='selected' disabled='disabled'>{% if search_fields.body_style %} {{search_fields.body_style}} {% else %}Select Type of Body{%endif%}</option>
+                                    {% for body_style in body_style_search %}
+                                      <option value="{{body_style}}">{{body_style}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="transmission">
+                                    <option selected='selected' disabled='disabled'>{% if search_fields.transmission %} {{search_fields.transmission}} {% else %}Transmission{%endif%}</option>
+                                    {% for transmission in transmission_search %}
+                                      <option value="{{transmission}}">{{transmission}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <button class="btn btn-block button-theme btn-md">
+                                    <i class="fa fa-search"></i>Filter Bikes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Search box 3 end -->
+
+<!-- Featured car start -->
+<div class="featured-car content-area">
+    <div class="container">
+        <!-- Main title -->
+        <div class="main-title">
+            <h1>Your Search <span>Result</span></h1>
+            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
+        </div>
+        <div class="row">
+          {% for bike in bikes %}
+            <div class="col-lg-4 col-md-6">
+                <div class="car-box">
+                    <div class="car-thumbnail">
+                        <div style="z-index: 20;">
+                        <a href="{% url 'bike_detail' bike.id %}" class="car-img">
+                            {% if bike.for_sale %}<div class="tag">For Sale</div> {%endif%}
+                            {% if bike.for_rent %}<div class="tag">Only For Rent</div> {%endif%}
+                            {% if bike.for_rent and bike.for_sale %}<div class="tag">For Sale/Rent</div> {%endif%}
+
+                            <img class="d-block w-100" src="{{bike.bike_photo.url}}" alt="bike" style="min-height: 262px; max-height: 262px;">
+                            <div class="facilities-list clearfix">
+                                <ul>
+                                    <li>
+                                        <span><i class="flaticon-way"></i></span>{{bike.miles | intcomma}} miles
+                                    </li>
+                                    <li>
+                                        <span><i class="flaticon-calendar-1"></i></span>{{bike.year}}
+                                    </li>
+                                    <li>
+									<!-- Log on to codeastro.com for more projects -->
+                                        <span><i class="flaticon-manual-transmission"></i></span>{{bike.transmission}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                        </div>
+                        
+                    </div>
+                    <div class="detail">
+                        <h1 class="title">
+                            <a href="{% url 'bike_detail' bike.id %}">{{bike.bike_title}}</a>
+                        </h1>
+                        <div class="location">
+                            <a href="{% url 'bike_detail' bike.id %}">
+                                <i class="flaticon-pin"></i>{{bike.state}}, {{bike.city}}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="footer clearfix">
+                        <div class="pull-left ratings days">
+                            <p class="cartype">{{bike.body_style}}</p>
+                        </div>
+                        <div class="pull-right">
+                            <p class="price">Rs. {{bike.price | intcomma}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Featured bike end -->
+
+{% endblock %}

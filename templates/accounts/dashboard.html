@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %} | Dashboard {% endblock %}
+{% block content %}
+
+<!-- Sub banner start -->
+<!-- Log on to codeastro.com for more projects -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Dashboard</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">{{user.first_name}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+<!-- Log on to codeastro.com for more projects -->
+
+<!--   Dashboard Start   -->
+
+<div class="container mt-50 mb-50">
+  {% include 'includes/messages.html' %}
+	<div class="main-title" style="text-align:left !important;">
+            <h1>Welcome <span>{{user.first_name}} {{user.last_name}},</span></h1>
+          </div>
+          <p>Here are the history of bikes that you have rented:</p>
+        {% if bikes_rented %}
+            <table class="table table-hover table-bordered table-striped">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Bike Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Booked Date</th>
+                <th scope="col">Pickup Date</th>
+                <th scope="col">Dropoff Date</th>
+                <th scope="col">Returned Date</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              {% for bike in bikes_rented %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <!-- <th scope="row">1</th> -->
+                  <td><a href="{% url 'bike_detail' bike.bike_id %}" style="text-decoration-line: underline; color: blue">{{bike.bike.bike_title}}</a></td>
+                  <td>{{bike.location}}</td>
+                  <td>{{bike.rented_date}}</td>
+                  <td>{{bike.pickup_date}}</td>
+                  <td>{{bike.dropoff_date}}</td>
+                  <td>{% if bike.returned_date %} {{bike.returned_date}} {% else %} Pending {% endif %} </td>
+                  
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table><!-- Log on to codeastro.com for more projects -->
+        {% else %}
+        <div class="alert alert-primary" role="alert">
+          <h4>You have no rented bikes!!</h4>
+        </div>
+          
+        {% endif %}
+
+        <hr class="mb-40 ">
+       
+          <p>Here are the list of the bikes that you have inquired about:</p>
+      
+      {% if bike_inquiries %}
+          <table class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Bike Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for inquiry in bike_inquiries %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{inquiry.title}}</td>
+                <td>{{inquiry.city}}</td>
+                <td><a href="{% url 'bike_detail' inquiry.item_id %}" class="btn btn-dark">View Bike</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+      {% else %}
+      <div class="alert alert-primary" role="alert">
+        <h4>You have no inquiries!!</h4>
+      </div>
+        
+      {% endif %}     
+      <hr class="mb-40 ">
+       
+      <p>Here are the list of the bike spare parts that you have inquired about:</p>
+  
+      {% if parts_inquiries %}
+          <table class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for inquiry in parts_inquiries %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{inquiry.title}}</td>
+                <td>{{inquiry.city}}</td>
+                <td><a href="{% url 'parts_detail' inquiry.item_id %}" class="btn btn-dark">View Item</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+      {% else %}
+      <div class="alert alert-primary" role="alert">
+        <h4>You have no inquiries!!</h4>
+      </div>
+        
+      {% endif %}     
+
+</div>
+
+<!--   Dashboard End   -->
+
+{% endblock %}
