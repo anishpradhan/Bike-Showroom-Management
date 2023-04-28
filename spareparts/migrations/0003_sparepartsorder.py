@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('created_date', models.DateTimeField(blank=True, default=datetime.datetime.now)),
                 ('price', models.IntegerField()),
                 ('sparepart', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='orders', to='spareparts.spareparts')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name': 'Spareparts Order',

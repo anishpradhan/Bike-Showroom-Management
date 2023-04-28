@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ('rating', models.IntegerField()),
                 ('created_date', models.DateTimeField(blank=True, default=datetime.datetime.now)),
                 ('sparepart', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviews', to='spareparts.spareparts')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name': 'Spareparts Review',

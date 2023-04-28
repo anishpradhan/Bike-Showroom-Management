@@ -125,7 +125,7 @@ class Bike(models.Model):
 
 class BikeOrder(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.DO_NOTHING)
+                             on_delete=models.CASCADE)
     bike = models.ForeignKey(Bike, related_name='orders',
                                   on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=datetime.now, blank=True)

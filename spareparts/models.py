@@ -42,7 +42,7 @@ class Spareparts(models.Model):
 
 class SparepartsReview(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.DO_NOTHING)
+                             on_delete=models.CASCADE)
     sparepart = models.ForeignKey(Spareparts, related_name='reviews',
                                   on_delete=models.CASCADE)
     rating = models.IntegerField()
@@ -58,7 +58,7 @@ class SparepartsReview(models.Model):
 
 class SparepartsOrder(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.DO_NOTHING)
+                             on_delete=models.CASCADE)
     sparepart = models.ForeignKey(Spareparts, related_name='orders',
                                   on_delete=models.CASCADE)
     quantity = models.IntegerField()
