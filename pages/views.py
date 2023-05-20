@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 # from .models import Team
 from bike.models import Bike
-
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -39,7 +40,7 @@ def about(request):
 def services(request):
     return render(request, 'pages/services.html')
 
-
+@login_required(login_url = 'login')
 def contact(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -57,7 +58,7 @@ def contact(request):
         send_mail(
             email_subject,
             message_body,
-            'rathan.kumar049@gmail.com',
+            request.user.email
             [admin_email],
             fail_silently=False,
         )

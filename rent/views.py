@@ -3,7 +3,9 @@ from .models import Rent, RentReview
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url = 'login')
 def rent(request):
     if request.method == 'POST':
         bike_id = request.POST['bike_id']

@@ -28,7 +28,6 @@
                 <div class="car-details-section">
                     <!-- Heading start -->
                     <div class="heading-car clearfix">
-                        {% include 'includes/messages.html' %}
                         <div class="pull-left">
                             <h3>{{single_bike.bike_title}}</h3>
                             <h6>
@@ -122,16 +121,28 @@
                         <button class="btn button-theme btn-md" disabled title="Unavailable, Already sold"
                             style="cursor:not-allowed">Has been Booked</button>
                         {%else%}
-                        <button class="btn button-theme btn-md" data-target="#bikeOrderModal" data-toggle="modal"
+                        {% if user.is_authenticated %}
+                        <button class="btn button-theme btn-md"  data-target="#bikeOrderModal" data-toggle="modal"
                             title="Book it now">Book</button>
+
+                        {%else%}
+                        <a href="{% url 'login'%}"><button class="btn button-theme btn-md"
+                            title="Book it now">Book</button></a>
+                        {%endif%}
 
                         {%endif%}
                         {%endif%}
 
                         {% if single_bike.for_rent %}
                         {%if not bought%}
+                         {% if user.is_authenticated %}
                         <button class="btn button-theme btn-md " data-toggle="modal" title="Rent this bike"
                             data-target="#rentModal">Rent</button>
+                            {%else%}
+                            <a href="{% url 'login'%}"> <button class="btn button-theme btn-md "title="Rent this bike"
+                                >Rent</button></a>
+                            {%endif%}
+
                         {%endif%}
                         {%endif%}
 
@@ -245,7 +256,7 @@
                                                                     <td class="rating-bar">
                                                                         <div class="bar-container">
                                                                             <div class="bar-5"
-                                                                                style="width: {{rating_stats.Excellent_percent}}%">
+                                                                                style="width: {{rating_stats.Excellent_percent}}">
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -257,7 +268,7 @@
                                                                     <td class="rating-bar">
                                                                         <div class="bar-container">
                                                                             <div class="bar-4"
-                                                                                style="width: {{rating_stats.Good_percent}}%">
+                                                                                style="width: {{rating_stats.Good_percent}}">
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -268,7 +279,7 @@
                                                                     <td class="rating-bar">
                                                                         <div class="bar-container">
                                                                             <div class="bar-3"
-                                                                                style='width: {{rating_stats.Average_percent}}%'>
+                                                                                style='width: {{rating_stats.Average_percent}}'>
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -279,7 +290,7 @@
                                                                     <td class="rating-bar">
                                                                         <div class="bar-container">
                                                                             <div class="bar-2"
-                                                                                style="width: {{rating_stats.Poor_percent}}%">
+                                                                                style="width: {{rating_stats.Poor_percent}}">
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -290,7 +301,7 @@
                                                                     <td class="rating-bar">
                                                                         <div class="bar-container">
                                                                             <div class="bar-1"
-                                                                                style="width: {{rating_stats.Terrible_percent}}%">
+                                                                                style="width: {{rating_stats.Terrible_percent}}">
                                                                             </div>
                                                                         </div>
                                                                     </td>

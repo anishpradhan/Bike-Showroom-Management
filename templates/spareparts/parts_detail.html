@@ -112,11 +112,16 @@
                     </div>
                     <div class="w-100 my-4 d-flex justify-content-end " style="gap: 10px">
                         {%if out_of_stock %}
+
                         <button class="btn button-theme btn-md" disabled data-target="#partsOrderModal" data-toggle="modal"
-                            title="Out of Stock" style="cursor:not-allowed">Book</button> 
+                            title="Out of Stock" style="cursor:not-allowed">Out of Stock</button> 
                             {%else%}
+                            {% if user.is_authenticated %}
                             <button class="btn button-theme btn-md" data-target="#partsOrderModal" data-toggle="modal"
-                                title="Book it now">Book</button> 
+                                title="Book it now">Book</button>
+                                {%else%}
+                                <a href="{% url 'login' %}"><button class="btn button-theme btn-md">Book</button></a>
+                                {%endif%} 
 
                         {%endif%}
                     </div>

@@ -132,4 +132,11 @@ $(".input-number").keydown(function (e) {
     }
 });
 
+$("#rent-bike-button").click(function(e) {
+    $("#home-rent-search").css({'display': 'block'});
+})
+$("#back-arrow").click(function(e) {
+    $("#home-rent-search").css({'display': 'none'});
+})
+
 })

@@ -39,9 +39,31 @@
                 </div>
             </div>
         </div>
+
+
         <!-- Search box 3 start -->
-        <div class="search-box-4 sb-8" style="z-index: 10;">
-            <div class="d-flex row justify-content-center"><span style="font-weight: bold; font-size: 25px;">Search Bikes for Renting</span></div>
+        
+        <div class="search-box-4 sb-8" id="button-choice" style="z-index: 10">
+            <div class="d-flex row justify-content-center"><span style="font-weight: bold; font-size: 22px;">Book-A-Bike and Hit the Road!</span></div>
+            <hr />
+            <a href="{% url 'bike' %}"><button class="btn btn-block button-theme btn-md">
+                <i class="fa fa-bookmark"></i> &nbsp; Book Bikes
+            </button></a>
+            <hr />
+            <div class="d-flex row justify-content-center px-2"><span style="font-weight: bold; font-size: 22px;">Rent a bike with our Bike-Rental Service!</span></div>
+
+            <br>
+            <button class="btn btn-block button-theme btn-md" id="rent-bike-button">
+                <i class="fa fa-search"></i> &nbsp; Rent Bikes
+            </button>
+            <hr />
+
+
+        </div>
+        <div class="search-box-4 sb-8" id="home-rent-search" style="z-index: 10; display:none;">
+
+            <div class="d-flex row justify-content-around align-items-center">
+                <span id="back-arrow" style="cursor: pointer;" title="go back"><i class="fa fa-arrow-left"></i></span><span style="font-weight: bold; font-size: 25px;">Search Bikes for Renting</span></div>
             <hr/>
             <form action="{% url 'rent-search' %}" method="GET">
 
